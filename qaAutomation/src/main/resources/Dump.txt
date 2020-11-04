@@ -1,0 +1,4 @@
+Test case run URL : http://localhost:2021/testcase/execution/run
+
+Need to create below folder structure & place the chrome driver 'chromedriver.exe' :
+ D:/selenium/driver/latest/chromedriver.exe
