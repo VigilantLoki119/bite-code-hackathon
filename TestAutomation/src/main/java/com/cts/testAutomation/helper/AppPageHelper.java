@@ -46,9 +46,9 @@ public class AppPageHelper {
 		List<ApplicationDetails> appDetailsList = new ArrayList<>();
 	    ApplicationDetails appDetails = null;
 	    for(String appName : appKeys) {
-	    	appDetails = new ApplicationDetails();
-	    	appDetails.setAppName(appName);
-	    	appDetails.setPageDetails(pageDetailsMap.get(appName));
+	    	List<PageDetails> dataList = pageDetailsMap.get(appName);
+	    	appDetails = dataList.get(0).getAppDetails();
+	    	appDetails.setPageDetails(dataList);
 	    	appDetailsList.add(appDetails);
 	    }
 	    request.setAppDetailsList(appDetailsList);
@@ -87,9 +87,10 @@ public class AppPageHelper {
 		Map<String,List<PageDetails>> dataMap = new HashMap<>();
 		List<PageDetails> dataList = new ArrayList<>();
 		PageDetails pageDetails = null;
+		ApplicationDetails appDetails =null;
 		int rowCount = sheetPageDetails.getLastRowNum()-sheetPageDetails.getFirstRowNum();
 	    
-	    for (int i = 0; i < rowCount+1; i++) {
+	    for (int i = 1; i < rowCount+1; i++) {
 
 	        Row row = sheetPageDetails.getRow(i);
 	        String appName = row.getCell(0).getStringCellValue();
@@ -98,15 +99,19 @@ public class AppPageHelper {
 	        	dataList = dataMap.get(appName);
 	        	pageDetails = new PageDetails();
       		    pageDetails.setPageName(pageName);
+      		    appDetails = dataList.get(0).getAppDetails();
+      		    pageDetails.setAppDetails(appDetails);
       		    dataList.add(pageDetails);
       		    dataMap.put(appName, dataList);
       	    }else {
       	    	dataList = new ArrayList<>();
-      		    dataMap = new HashMap<>();
       		    pageDetails = new PageDetails();
-      		    pageDetails.setPageName(pageName);
-      		    dataList.add(pageDetails);
-      		    dataMap.put(appName, dataList);
+    		    pageDetails.setPageName(pageName);
+    		    appDetails = new ApplicationDetails();
+    		    appDetails.setAppName(appName);
+    		    pageDetails.setAppDetails(appDetails);
+    		    dataList.add(pageDetails);
+    		    dataMap.put(appName, dataList);
       	    }
 	    } 
 	    

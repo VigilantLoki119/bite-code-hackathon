@@ -4,6 +4,6 @@ import com.cts.testAutomation.model.AppConfigDataRequest;
 
 public interface AppConfigDao {
 	
-	String insertAppConfData(AppConfigDataRequest appConfDataRequest);
+	AppConfigDataRequest insertAppConfData(AppConfigDataRequest appConfDataRequest);
 
 }

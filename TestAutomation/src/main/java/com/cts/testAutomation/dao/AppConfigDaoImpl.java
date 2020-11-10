@@ -17,11 +17,11 @@ public class AppConfigDaoImpl implements AppConfigDao{
 	private EnvConfigRepository envConfigRepository;
 
 	@Override
-	public String insertAppConfData(AppConfigDataRequest appConfDataRequest) {
-		appConfigRepository.saveAll(appConfDataRequest.getAppDetailsList());
-		envConfigRepository.saveAll(appConfDataRequest.getEnvDetailsList());
+	public AppConfigDataRequest insertAppConfData(AppConfigDataRequest appConfDataRequest) {
+		appConfDataRequest.setAppDetailsList(appConfigRepository.saveAll(appConfDataRequest.getAppDetailsList()));
+		appConfDataRequest.setEnvDetailsList(envConfigRepository.saveAll(appConfDataRequest.getEnvDetailsList()));
 		
-		return "success";
+		return appConfDataRequest;
 	}
 
 	

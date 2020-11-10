@@ -4,8 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cts.testAutomation.entity.ApplicationDetails;
 
-public interface AppConfigRepository extends JpaRepository<ApplicationDetails,Integer>{
-
-	
+public interface AppDetailsDataRepository extends JpaRepository<ApplicationDetails, Integer>{
 
 }
