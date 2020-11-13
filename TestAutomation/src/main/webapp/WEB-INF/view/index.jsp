@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+<script src="/js/index.js"></script>
 </head>
 
 <!------Home Html ------->

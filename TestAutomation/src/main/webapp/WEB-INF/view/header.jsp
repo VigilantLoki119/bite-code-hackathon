@@ -21,7 +21,7 @@
       <li class="active" id="index"><a href="/index">TestCase Run</a></li>
       <li id="result"><a href="/result">Execution Result</a></li>
       <li id="configuration"><a href="/configuration">Configure Application</a></li>
-	  <li id="createTestCase"><a href="">Create TestCase</a></li>
+	  <li id="createTestCase"><a href="/create-testcase">Create TestCase</a></li>
     </ul>
   </div>
 </nav>

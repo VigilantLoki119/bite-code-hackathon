@@ -123,4 +123,9 @@ public class AppPageController {
 
 		return "configuration";
 	}
+	
+	@RequestMapping(value = "/create-testcase",  method = RequestMethod.GET)
+	public String createTestCase() {
+		return "createTestCase";
+	}
 }
