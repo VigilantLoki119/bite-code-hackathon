@@ -26,7 +26,6 @@
   </div>
   <div class="row">
     <h1 id="msg"></h1>
-    <h1 id="bannedMsg"></h1>
   </div>
 <div class="row">  
     <div class="col-sm-12">
