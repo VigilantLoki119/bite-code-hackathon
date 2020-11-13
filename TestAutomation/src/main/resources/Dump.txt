@@ -1,4 +1,9 @@
-Test case run URL : http://localhost:2021/testcase/execution/run
-Test case run URL : http://localhost:2021/testcase/execution/result/{sessionId}
+Test case run URL : http://localhost:2024/testcase/execution/run
+Test case run URL : http://localhost:2024/testcase/execution/result/{sessionId}
 Need to create below folder structure & place the chrome driver 'chromedriver.exe' :
  D:/selenium/driver/latest/chromedriver.exe
+ 
+ 
+insert into  test_cases value(100,5,7,'RCIO_WOW_LIST_VIEW_OLD');
+insert into  test_cases value(1001,5,7,'RCIO_WOW_LIST_VIEW_NEW');
+insert into  test_cases value(102,5,7,'RCIO_WOW_LIST_VIEW_COMMON');

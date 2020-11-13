@@ -8,18 +8,95 @@
 <title>Insert title here</title>
 <link href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
-<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-
+<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/js/home.js"></script>
 <script src="/js/result.js"></script>
 </head>
 <body>
-<div class="container pt-10x">
-        <div class="note">
-           <p><h1>Result Page for Automated testing.</h1></p>
-        </div>
-        <br>
+<jsp:include page="header.jsp"/>
 
-        <div id="table-border" class="col-md-12">
+
+  
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+      <h2>Test Case Execution Result</h2>
+    </div>
+</div>
+    <br>
+	<br>
+  <div class="row">
+    <div class="col-sm-12">
+                  <table  class="table table-bordered" style="border-collapse:collapse;">
+                <thead>
+                    <tr>
+                    	<th scope="col">TestCase Application</td>
+                        <th scope="col">Site1 TestCase</td>
+                        <th scope="col">Site2 TestCase</td>
+                        <th scope="col">TestCase ExecutionKey</td>
+                        <th scope="col">Status</td>
+                        
+                    </tr>
+                </thead>
+
+                <tbody>
+              		<c:forEach var="runningTestCase" items="${runningTestCaseList}" varStatus="loopCounter">
+            
+                    <tr>
+                    	<td>
+                         
+                            	<ul>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedApp}"/></p></li>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedPage}"/></p></li>
+                               </ul>
+                        </td>
+                        <td>
+                         
+                            	<ul>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedEnvSite1}"/></p></li>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedUrlSite1}"/></p></li>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedTestCaseSite1}"/></p></li>
+                            	</ul>
+                              
+                        </td>
+                        
+                         <td>
+                         
+                            	<ul>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedEnvSite2}"/></p></li>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedUrlSite2}"/></p></li>
+                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedTestCaseSite2}"/></p></li>
+                               </ul>
+                        </td>
+                      
+                          
+                     
+                         <td>
+                         
+                         	<p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunResponse.testCaseSessionKey}"/></p>
+                          
+                        </td>
+                        
+                         <td>
+                         
+                         	<p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunResponse.status}"/></p>
+                         	<c:if test="${runningTestCase.testCaseRunResponse.status == 'success'}">
+                          	<p class="text-left font-weight-bold"><button type="button" class="btn btn-success" onClick="viewResult('${runningTestCase.testCaseRunResponse.testCaseSessionKey}')">Show Details</button></p>
+                          	</c:if>
+                        </td>
+                       
+                   </tr>
+                </c:forEach>
+                   </tbody>
+            </table>
+    </div>
+</div>
+    <br>
+	<br>    
+ 
+<div class="row" id="resultGridView"> 
+  <!--  Start of Grid View -->
+      <%--   <div id="table-border" class="col-md-12">
             <table  class="table table-bordered" style="border-collapse:collapse;">
                 <thead>
                     <tr>
@@ -71,8 +148,19 @@
                   </c:forEach>
                    </tbody>
             </table>
+        </div> --%>
+        <!--  End of Grid View -->
+        
+        
         </div>
+        
 </div>      
 
 </body>
+ <script> 
+ $(document).ready(function () { 
+                $('ul.navbar-nav > li') .removeClass('active'); 
+                $("#result").addClass('active'); 
+        }); 
+ </script> 
 </html>

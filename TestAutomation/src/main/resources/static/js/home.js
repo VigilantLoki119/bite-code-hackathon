@@ -1,30 +1,93 @@
 /* Home JS */
+$(document).ready(function() {
+	  $( "#selectedApp" ).change(function() {
+		$("#selectedPage").html("");
+	 	var appId = $("#selectedApp").val();
+	     $.ajax({
+	         type : 'GET', 
+	         url  : 'http://localhost:2024/app/conf/page/details/'+appId, 
+	         success: function(response) {
+	         	if(undefined != response ){
+					var i=0;
+					var str= "<option value=''>Select Functionality Name</option>";
+					for(i; i<response.appPages.length; i++){
+						str=str+"<option value='"+response.appPages[i].pageId+"'>"+response.appPages[i].pageName+"</option>";
+					}
+	         		$("#selectedPage").html(str);
+	         	}
+	         },
+	         error: function(response) {
+	         	
+	        }
+	     });
+		});
+	  
+	  $( "#selectedPage" ).change(function() {
+		  $("#selectedTestCaseSite1").html("");
+   		  $("#selectedTestCaseSite2").html("");
+		 	var appId = $("#selectedApp").val();
+		 	var pageId = $("#selectedPage").val();
+		     $.ajax({
+		         type : 'GET', 
+		         url  : 'http://localhost:2024/app/conf/testcase/'+appId+'/'+pageId, 
+		         success: function(response) {
+		         	if(undefined != response ){
+						var i=0;
+						var str= "";
+						for(i; i<response.testCases.length; i++){
+							str=str+"<option value='"+response.testCases[i].testCaseId+"'>"+response.testCases[i].testCaseName+"</option>";
+						}
+		         		$("#selectedTestCaseSite1").html(str);
+		         		$("#selectedTestCaseSite2").html(str);
+		         	}
+		         },
+		         error: function(response) {
+		         	
+		        }
+		     });
+			});
+	
+	  
+	  $( "#loginCredRequired" ).click(function() {
+		  
+		  if ($("#loginCredRequired").prop("checked") == true){
+		    $("#loginCred").show();
+		  } else {
+			  $("#loginCred").hide();
+		  }
+		  
+			});
+	  
+	  
+	  $('ul.navbar-nav > li') .click(function (e) { 
+			 $('ul.navbar-nav > li') .removeClass('active'); 
+			 $(this).addClass('active'); 
+			});
+	  
+	});
 
-function loginDetails() {
 
-  var checkBox = document.getElementById("loginCheck1");
-  var login1 = document.getElementById("login-disp1");
 
-console.log(checkBox);
-console.log(login1);
+function getUrlValue(id){
+	  
 
-  if (checkBox.checked == true){
-    login1.style.display = "block";
-  } else {
-    login1.style.display = "none";
-  }
+			$("#selectedUrlSite"+id).html("");
+		 	var envId = $("#selectedEnvSite"+id).val();
+		     $.ajax({
+		         type : 'GET', 
+		         url  : 'http://localhost:2024/app/conf/env/url/'+envId, 
+		         success: function(response) {
+		         	if(undefined != response ){
+		         		$("#selectedUrlSite"+id).val(response);
+		         	}
+		         },
+		         error: function(response) {
+		         	
+		        }
+		     });
+			
+	
 }
 
-function loginDetails2() {
-  
-  var checkBox = document.getElementById("loginCheck2");
-  var login2 = document.getElementById("login-disp2");
 
-  console.log(login2);
 
-  if (checkBox.checked == true){
-    login2.style.display = "block";
-  } else {
-    login2.style.display = "none";
-  }
-}

@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Configuration;
 
+import com.cts.testAutomation.model.RunningTestCase;
 import com.cts.testAutomation.model.TestCaseExecutionResponse;
 import com.cts.testAutomation.model.TestResultDetails;
 
@@ -18,7 +19,36 @@ public class TestResultCache  {
 
 	private static Map<String, List<TestResultDetails>> cachedTestResultMap = new ConcurrentHashMap<>();
 	private static Map<String, TestCaseExecutionResponse> cachedFinalTestResultMap = new ConcurrentHashMap<>();
+	private static Map<String, List<RunningTestCase>> runningTestCasesMap = new ConcurrentHashMap<>(); 
+	
+	@Cacheable(value = "runningTestCasesCache")
+	public List<RunningTestCase> getRunningTestCasesFromCache(String key) {
+		List<RunningTestCase> runningTestCaseList = null;
+		try {
+			runningTestCaseList = runningTestCasesMap.get(key);
+		} catch (Exception exp) {
 
+		}
+		return runningTestCaseList;
+	}
+
+	@CachePut(value = "runningTestCasesCache")
+	public void storerRunningTestCasesInCache(String key, RunningTestCase runningTestCase) {
+		try {
+			
+			List<RunningTestCase> runningTestCasesList = runningTestCasesMap.get(key);
+			if(runningTestCasesList == null) {
+				runningTestCasesList = new ArrayList<>();
+				runningTestCasesList.add(runningTestCase);
+				runningTestCasesMap.put(key, runningTestCasesList);
+			}else {
+				runningTestCasesList.add(runningTestCase);
+				runningTestCasesMap.put(key, runningTestCasesList);
+			}
+		} catch (Exception exp) {
+
+		}
+	}
 	@Cacheable(value = "testResultCache")
 	public List<TestResultDetails> getTestResultFromCache(String testCaseSessionKey) {
 		List<TestResultDetails> testResultList = null;

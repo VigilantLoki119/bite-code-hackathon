@@ -9,3 +9,21 @@ function hideItemData(id){
 	$("#btn-show-"+id).removeClass('hidden');
 	$("#btn-hide-"+id).addClass('hidden');
 }
+
+function viewResult(testCaseSessionId){
+	
+	$("#resultGridView").html("");
+    $.ajax({
+        type : 'GET', 
+        url  : '/result/view/'+testCaseSessionId, 
+        success: function(response) {
+        	if(undefined != response ){
+        		$("#resultGridView").html(response);
+        	}
+        },
+        error: function(response) {
+        	
+       }
+    });
+	
+}
