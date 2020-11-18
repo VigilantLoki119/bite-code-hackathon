@@ -44,8 +44,10 @@ public class AppConfRestController {
 	
 	
 	
-	@GetMapping("/page/details/{appId}")
-	public PageDetailsResponse getPageDetails(@PathVariable int appId) {
+	@GetMapping("/page/details/{appKey}")
+	public PageDetailsResponse getPageDetails(@PathVariable String appKey) {
+		String[] appKeyArr = appKey.split(TestCaseConstant.APP_KEY_SPLITTER);
+		int appId = Integer.parseInt(appKeyArr[0]);
 		ApplicationDetails appDetails = appConfigRepository.findByAppId(appId);
 		
 		PageDetailsResponse response = new PageDetailsResponse();
@@ -74,8 +76,12 @@ public class AppConfRestController {
 		
 	}
 	
-	@GetMapping("/testcase/{appId}/{pageId}")
-	public TestCasesResponse getAvailabeTestCases(@PathVariable int appId,@PathVariable int pageId) {
+	@GetMapping("/testcase/{appKey}/{pageKey}")
+	public TestCasesResponse getAvailabeTestCases(@PathVariable String appKey,@PathVariable String pageKey) {
+		String[] appKeyArr = appKey.split(TestCaseConstant.APP_KEY_SPLITTER);
+		String[] pageKeyArr = pageKey.split(TestCaseConstant.APP_KEY_SPLITTER);
+		int appId = Integer.parseInt(appKeyArr[0]);
+		int pageId = Integer.parseInt(pageKeyArr[0]);
 		List<TestCase> testCasesList = testCasesRepository.findByAppIdAndPageId(appId, pageId);
 		TestCasesResponse response = new TestCasesResponse();
 		if(null != testCasesList) {

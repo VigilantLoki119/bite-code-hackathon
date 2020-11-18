@@ -11,7 +11,7 @@ $(document).ready(function() {
 					var i=0;
 					var str= "<option value=''>Select Functionality Name</option>";
 					for(i; i<response.appPages.length; i++){
-						str=str+"<option value='"+response.appPages[i].pageId+"'>"+response.appPages[i].pageName+"</option>";
+						str=str+"<option value='"+response.appPages[i].pageId+"_#_"+response.appPages[i].pageName+"'>"+response.appPages[i].pageName+"</option>";
 					}
 	         		$("#selectedPage").html(str);
 	         	}

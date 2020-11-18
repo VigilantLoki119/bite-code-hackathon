@@ -1,3 +1,4 @@
+<%@page import="com.cts.testAutomation.model.TestCaseRunRequest"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib  uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -29,11 +30,6 @@
 <div class="row"> 
 
     <div class="col-sm-12">
-
-
-                      
-							
-                             
 								<form:form action="/result" modelAttribute="testCaseRunRequest" method="post"> 
 								<!-- section-1-->
 									<div class="col-sm-6">
@@ -42,7 +38,7 @@
 										  <form:select class="form-control" id="selectedApp" path="selectedApp">
 										   <option value="">Select Application Name</option>
 											<c:forEach var="appValue" items="${appDetails}">
-											<option value="${appValue.appId}"><c:out value="${appValue.appName}"/></option>
+											<option value="${appValue.appId}_#_${appValue.appName}"><c:out value="${appValue.appName}"/></option>
 											</c:forEach>
 										  </form:select>
 										</div>
@@ -123,12 +119,10 @@
                                         </div>
                                    
                                 </div>
-								<button type="Submit" class="btnSubmit" >Run</button>
+								<button type="Submit" class="btnSubmit">Run</button>
 								</div>
 								<!-- section--->
 							</form:form>
-               
-         
 		 
 
 
@@ -142,4 +136,5 @@
                 $("#index").addClass('active'); 
         }); 
     </script>
+
 </html>

@@ -70,10 +70,22 @@ public class AppPageController {
 	public String showResult(@ModelAttribute("testCaseRunRequest") TestCaseRunRequest testCaseRunRequest,ModelMap model) {
 		TestCaseRunResponse testCaseRunResponse = restTemplate.getForObject(TestCaseConstant.TEST_CASE_RUN_URL, TestCaseRunResponse.class);
 		RunningTestCase runningTestCase = new RunningTestCase();
+		
+		String id = testCaseRunRequest.getSelectedApp();
+		String function = testCaseRunRequest.getSelectedPage();
+		String[] appId = id.split(TestCaseConstant.APP_KEY_SPLITTER);
+		String[] appFunction = function.split(TestCaseConstant.APP_KEY_SPLITTER);
+		testCaseRunRequest.setSelectedApp(appId[0]);
+		testCaseRunRequest.setSelectedPage(appFunction[0]);
+		
 		runningTestCase.setTestCaseRunRequest(testCaseRunRequest);
 		runningTestCase.setTestCaseRunResponse(testCaseRunResponse);
 		testResultCache.storerRunningTestCasesInCache("testResult",runningTestCase);
 		List<RunningTestCase> runningTestCaseList = populateModel();
+		
+		testCaseRunRequest.setSelectedApp(appId[0]+" "+appId[1]);
+		testCaseRunRequest.setSelectedPage(appFunction[0]+" "+appFunction[1]);
+		
 		model.addAttribute("runningTestCaseList",runningTestCaseList);
 		return "result";
 	}
