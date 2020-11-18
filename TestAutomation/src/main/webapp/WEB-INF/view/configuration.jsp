@@ -24,7 +24,7 @@
   <c:if test="${not empty uploadSuccessMsg}">
   <div class="row">
     <div class="col-sm-12">
-      <h2><c:out value="${uploadSuccessMsg}"/></h2>
+      <h2 class="text-success"><c:out value="${uploadSuccessMsg}"/></h2>
     </div>
    
   </div>

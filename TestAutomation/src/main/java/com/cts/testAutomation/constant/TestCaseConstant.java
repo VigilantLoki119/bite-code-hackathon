@@ -16,5 +16,6 @@ public final class TestCaseConstant {
 	public static final String APP_DETAILS = "appDetails";
 	public static final String ENV_DETAILS = "envDetails";
 	public static final String TEST_CASE_RUN_URL = "http://localhost:2024/testcase/execution/run";
+	public static final String OPERATION_CATAGORY = "operationCatagory";
 
 }

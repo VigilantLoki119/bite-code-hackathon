@@ -3,6 +3,7 @@ package com.cts.testAutomation.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,7 +50,10 @@ public class AppPageController {
 	@Autowired
 	private TestResultCache testResultCache;
 	
+	@Value("${operationCatagory}")
+	private String operationCatagory;
 
+	
 	@RequestMapping(value = {"/","/index"},  method = RequestMethod.GET)
 	public String getIndex(ModelMap model) {
 		List<ApplicationDetails> appDetailsList = appConfigRepository.findAll();
@@ -125,7 +129,18 @@ public class AppPageController {
 	}
 	
 	@RequestMapping(value = "/create-testcase",  method = RequestMethod.GET)
-	public String createTestCase() {
+	public String createTestCase(ModelMap model) {
+		List<ApplicationDetails> appDetailsList = appConfigRepository.findAll();
+		List<EnvDetails> envDetailsList = envConfigRepository.findAll();
+		
+		model.addAttribute(TestCaseConstant.APP_DETAILS, appDetailsList);
+		model.addAttribute(TestCaseConstant.ENV_DETAILS, envDetailsList);
+		
+		String[] operationCatagoryArr = operationCatagory.split(",");
+		
+		model.addAttribute(TestCaseConstant.OPERATION_CATAGORY, operationCatagoryArr);
+		
 		return "createTestCase";
 	}
+	
 }

@@ -55,6 +55,7 @@
 										  </form:select>
 										</div>
 									</div>
+									</div>	 
 									<!-- section-1-->
 									<!-- section-2-->
 									<div class="col-sm-12">
@@ -129,7 +130,7 @@
                
          
 		 
-</div>	 
+
 
 </div>
 </div>
