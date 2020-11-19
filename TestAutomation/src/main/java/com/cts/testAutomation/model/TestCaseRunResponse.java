@@ -11,6 +11,7 @@ public class TestCaseRunResponse implements Serializable{
 	private String status;
 	private long sessionId;
 	private String testCaseId;
+	private String testCaseName;
 	private String testCaseSessionKey;
 	public String getStatus() {
 		return status;
@@ -36,6 +37,13 @@ public class TestCaseRunResponse implements Serializable{
 	public void setTestCaseSessionKey(String testCaseSessionKey) {
 		this.testCaseSessionKey = testCaseSessionKey;
 	}
+	public String getTestCaseName() {
+		return testCaseName;
+	}
+	public void setTestCaseName(String testCaseName) {
+		this.testCaseName = testCaseName;
+	}
+	
 	
 	
 	

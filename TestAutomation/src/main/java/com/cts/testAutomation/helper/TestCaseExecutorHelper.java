@@ -2,15 +2,24 @@
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cts.testAutomation.Repository.EnvConfigRepository;
+import com.cts.testAutomation.Repository.TestCaseRepository;
 import com.cts.testAutomation.cache.TestResultCache;
 import com.cts.testAutomation.constant.TestCaseConstant;
+import com.cts.testAutomation.entity.EnvDetails;
+import com.cts.testAutomation.entity.TestCase;
+import com.cts.testAutomation.entity.TestCaseXpath;
 import com.cts.testAutomation.model.TestCaseExecutionResponse;
 import com.cts.testAutomation.model.TestCaseExecutorRequest;
 import com.cts.testAutomation.model.TestCaseRunResponse;
@@ -29,6 +38,81 @@ public class TestCaseExecutorHelper {
 	
 	@Autowired
 	private TestResultCache testResultCache;
+	
+	@Autowired
+	private TestCaseRepository testCaseRepository;
+	
+	@Autowired
+	private EnvConfigRepository envConfigRepository;
+	
+
+	public TestCaseRunResponse runTest(int testCaseId) {
+		TestCaseRunResponse response = new TestCaseRunResponse();
+		response.setStatus(TestCaseConstant.RUNNING);
+		try {
+		TestCase testCaseDetails = testCaseRepository.findByTestCaseId(testCaseId);
+			if(null !=testCaseDetails) {
+				response.setTestCaseId(Integer.toString(testCaseId));
+				response.setTestCaseName(testCaseDetails.getTestCaseName());
+				long sessionId = System.currentTimeMillis();
+				response.setSessionId(sessionId);
+				response.setTestCaseSessionKey(testCaseDetails.getTestCaseName()+"_"+sessionId);
+				
+				List<TestCaseXpath> testCaseXpathList = testCaseDetails.getTestCaseXpathList();
+				if(null != testCaseXpathList) {
+					Map<String, TestCaseXpath> xpathMapSite1 = new LinkedHashMap<>();
+					Map<String, TestCaseXpath> xpathMapSite2 = new LinkedHashMap<>();
+					for(TestCaseXpath xpath : testCaseXpathList) {
+						  if(TestCaseConstant.SITE_1.equalsIgnoreCase(xpath.getSiteName())) {
+							  xpathMapSite1.put(xpath.getTestStepName(), xpath);
+						  }else if(TestCaseConstant.SITE_2.equalsIgnoreCase(xpath.getSiteName())) {
+							  xpathMapSite2.put(xpath.getTestStepName(), xpath);
+						  }
+					}
+					
+					TestCaseExecutorTask taskForSite1 = populateTaskExecutor(xpathMapSite1,response);
+					TestCaseExecutorTask taskForSite2 = populateTaskExecutor(xpathMapSite2,response);
+					ExecutorService pool = Executors.newFixedThreadPool(TestCaseConstant.THREAD_COUNT);
+					pool.execute(taskForSite1); 
+			        pool.execute(taskForSite2); 
+			        pool.shutdown();  
+					
+				}
+				
+			}
+		}catch(Exception exp) {
+			response.setStatus(TestCaseConstant.FAIL);
+		}
+		
+		
+		return response;
+		
+	}
+	
+
+	private TestCaseExecutorTask populateTaskExecutor(Map<String, TestCaseXpath> xpathMap,TestCaseRunResponse response) {
+		TestCaseXpath xpath= null;
+		 for (Map.Entry<String, TestCaseXpath> mapElement : xpathMap.entrySet()) { 
+			  xpath = mapElement.getValue(); 
+			  break;
+		 }
+	  
+		EnvDetails envDetails =  envConfigRepository.findByEnvId(xpath.getEnvId());		
+		
+		TestCaseExecutorRequest requestForSite = new TestCaseExecutorRequest();
+		requestForSite.setTestCaseSessionKey(response.getTestCaseSessionKey());
+		requestForSite.setSiteName(xpath.getSiteName());
+		requestForSite.setTestCaseName(response.getTestCaseName());
+		requestForSite.setUrl(envDetails.getEnvUrl());
+		requestForSite.setXpathMap(xpathMap);
+		
+		TestCaseExecutorTask taskForSite = new TestCaseExecutorTask();
+		taskForSite.populateTaskParameter(requestForSite,taskHelper);
+		
+		return taskForSite;
+		
+	}
+
 
 	public TestCaseRunResponse runTest(String testCaseName,String url) {
 		TestCaseRunResponse response = new TestCaseRunResponse();
@@ -92,7 +176,7 @@ public class TestCaseExecutorHelper {
 			
 			testResultWithStatusList = new ArrayList<>();
 			
-			if(TestCaseConstant.OLD_SITE.equalsIgnoreCase(testResultList.get(0).getSiteName())){
+			if(TestCaseConstant.SITE_1.equalsIgnoreCase(testResultList.get(0).getSiteName())){
 				testResultOldSite = testResultList.get(0);
 				testResultNewSite = testResultList.get(1);
 				
@@ -227,6 +311,8 @@ public class TestCaseExecutorHelper {
 		testResultWithStatus.setRemarks(remarks);
 		
 	}
-	
+
+
+
 	
 }

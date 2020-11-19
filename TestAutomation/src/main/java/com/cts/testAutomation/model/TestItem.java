@@ -11,6 +11,7 @@ public class TestItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String itemName;
 	private List<String> values;
+	private String xpathForException;
 	public String getItemName() {
 		return itemName;
 	}
@@ -23,6 +24,13 @@ public class TestItem implements Serializable{
 	public void setValues(List<String> values) {
 		this.values = values;
 	}
+	public String getXpathForException() {
+		return xpathForException;
+	}
+	public void setXpathForException(String xpathForException) {
+		this.xpathForException = xpathForException;
+	}
 	
-
+	
+	
 }

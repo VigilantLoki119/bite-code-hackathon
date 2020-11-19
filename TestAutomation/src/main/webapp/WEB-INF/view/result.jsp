@@ -27,68 +27,55 @@
 	<br>
   <div class="row">
     <div class="col-sm-12">
-                  <table  class="table table-bordered" style="border-collapse:collapse;">
-                <thead>
+      <table  class="table table-bordered" style="border-collapse:collapse;">
+           <c:choose>
+               <c:when test="${not empty runningTestCaseList}">
+                 <thead>
                     <tr>
-                    	<th scope="col">TestCase Application</td>
-                        <th scope="col">Site1 TestCase</td>
-                        <th scope="col">Site2 TestCase</td>
-                        <th scope="col">TestCase ExecutionKey</td>
+                    	<th scope="col">Application</td>
+                        <th scope="col">Functionality</td>
+                        <th scope="col">TestCaseName</td>
+                        <th scope="col">Execution Date&Time</td>
                         <th scope="col">Status</td>
                         
                     </tr>
                 </thead>
-
                 <tbody>
               		<c:forEach var="runningTestCase" items="${runningTestCaseList}" varStatus="loopCounter">
-            
                     <tr>
                     	<td>
-                         
-                            	<ul>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedApp}"/></p></li>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedPage}"/></p></li>
-                               </ul>
+                            <p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedApp}"/></p>
                         </td>
                         <td>
-                         
-                            	<ul>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedEnvSite1}"/></p></li>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedUrlSite1}"/></p></li>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedTestCaseSite1}"/></p></li>
-                            	</ul>
-                              
+							<p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedPage}"/></p>   
                         </td>
-                        
                          <td>
-                         
-                            	<ul>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedEnvSite2}"/></p></li>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedUrlSite2}"/></p></li>
-                            		<li><p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedTestCaseSite2}"/></p></li>
-                               </ul>
+                            <p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.selectedTestCaseName}"/></p>
                         </td>
-                      
-                          
-                     
                          <td>
-                         
-                         	<p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunResponse.testCaseSessionKey}"/></p>
-                          
+                         	<p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunRequest.testExecutionDate}"/></p>
                         </td>
-                        
                          <td>
-                         
                          	<p class="text-left font-weight-bold"><c:out value="${runningTestCase.testCaseRunResponse.status}"/></p>
                          	<c:if test="${runningTestCase.testCaseRunResponse.status == 'success'}">
                           	<p class="text-left font-weight-bold"><button type="button" class="btn btn-success" onClick="viewResult('${runningTestCase.testCaseRunResponse.testCaseSessionKey}')">Show Details</button></p>
                           	</c:if>
                         </td>
-                       
                    </tr>
                 </c:forEach>
-                   </tbody>
-            </table>
+             
+                </tbody>
+               </c:when>
+               <c:otherwise>
+               <tbody>
+               		<tr>
+               			<td>No Test Cases has been executed.</td>
+               		</tr>
+               </tbody>
+               </c:otherwise>
+            </c:choose>
+           
+       </table>
     </div>
 </div>
     <br>

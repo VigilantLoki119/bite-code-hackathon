@@ -18,9 +18,9 @@ public class TestCaseExecutionRestController {
 	private TestCaseExecutorHelper executorHelper;
 	
 	
-	@GetMapping("/run")
-	public TestCaseRunResponse executeTestCase() {
-		return executorHelper.runTest("WOW List View Search - ALL", "https://qaa.rci.com");	
+	@GetMapping("/run/{testCaseId}")
+	public TestCaseRunResponse executeTestCase(@PathVariable int testCaseId) {
+		return executorHelper.runTest(testCaseId);	
 	}
 	
 	@GetMapping("/result/{testCaseSessionKey}")

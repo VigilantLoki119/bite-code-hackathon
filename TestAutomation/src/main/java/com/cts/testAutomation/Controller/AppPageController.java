@@ -1,5 +1,8 @@
 package com.cts.testAutomation.Controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,38 +71,50 @@ public class AppPageController {
 	
 	@RequestMapping(value = "/result",  method = RequestMethod.POST)
 	public String showResult(@ModelAttribute("testCaseRunRequest") TestCaseRunRequest testCaseRunRequest,ModelMap model) {
-		TestCaseRunResponse testCaseRunResponse = restTemplate.getForObject(TestCaseConstant.TEST_CASE_RUN_URL, TestCaseRunResponse.class);
-		RunningTestCase runningTestCase = new RunningTestCase();
 		
-		String id = testCaseRunRequest.getSelectedApp();
-		String function = testCaseRunRequest.getSelectedPage();
-		String[] appId = id.split(TestCaseConstant.APP_KEY_SPLITTER);
-		String[] appFunction = function.split(TestCaseConstant.APP_KEY_SPLITTER);
-		testCaseRunRequest.setSelectedApp(appId[0]);
-		testCaseRunRequest.setSelectedPage(appFunction[0]);
+		if(null != testCaseRunRequest) {
+			String[] testCaseKeyArr = testCaseRunRequest.getSelectedTestCaseName().split(TestCaseConstant.SPILLTER);
+			testCaseRunRequest.setSelectedTestCaseId(Integer.parseInt(testCaseKeyArr[0]));
+			testCaseRunRequest.setSelectedTestCaseName(testCaseKeyArr[1]);
+			
+			String[] appKeyArr = testCaseRunRequest.getSelectedApp().split(TestCaseConstant.SPILLTER);
+			testCaseRunRequest.setSelectedAppId(Integer.parseInt(appKeyArr[0]));
+			testCaseRunRequest.setSelectedApp(appKeyArr[1]);
+			
+			String[] pageKeyArr = testCaseRunRequest.getSelectedPage().split(TestCaseConstant.SPILLTER);
+			testCaseRunRequest.setSelectedPageId(Integer.parseInt(pageKeyArr[0]));
+			testCaseRunRequest.setSelectedPage(pageKeyArr[1]);
+			
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+			String currentDateAndTime = LocalDateTime.now().format(dateFormatter); 
+			testCaseRunRequest.setTestExecutionDate(currentDateAndTime);
+			
+			TestCaseRunResponse testCaseRunResponse = restTemplate.getForObject(TestCaseConstant.TEST_CASE_RUN_URL+testCaseRunRequest.getSelectedTestCaseId(), TestCaseRunResponse.class);
+			RunningTestCase runningTestCase = new RunningTestCase();
+			runningTestCase.setTestCaseRunRequest(testCaseRunRequest);
+			runningTestCase.setTestCaseRunResponse(testCaseRunResponse);
+			testResultCache.storerRunningTestCasesInCache("testResult",runningTestCase);
+			List<RunningTestCase> runningTestCaseList = populateModel();
+			model.addAttribute("runningTestCaseList",runningTestCaseList);
+		}
 		
-		runningTestCase.setTestCaseRunRequest(testCaseRunRequest);
-		runningTestCase.setTestCaseRunResponse(testCaseRunResponse);
-		testResultCache.storerRunningTestCasesInCache("testResult",runningTestCase);
-		List<RunningTestCase> runningTestCaseList = populateModel();
 		
-		testCaseRunRequest.setSelectedApp(appId[0]+" "+appId[1]);
-		testCaseRunRequest.setSelectedPage(appFunction[0]+" "+appFunction[1]);
-		
-		model.addAttribute("runningTestCaseList",runningTestCaseList);
 		return "result";
 	}
 	
 	private List<RunningTestCase> populateModel() {
 		List<RunningTestCase> runningTestCaseList = testResultCache.getRunningTestCasesFromCache("testResult");
-		for(RunningTestCase runningTestCase : runningTestCaseList) {
-			TestCaseRunResponse testCaseRunResponse = runningTestCase.getTestCaseRunResponse();
-			String testCaseSessionId = testCaseRunResponse.getTestCaseSessionKey();
-			if(!"success".equalsIgnoreCase(testCaseRunResponse.getStatus())) {
-			TestCaseExecutionResponse testCaseExecutionResponse = restTemplate.getForObject(TestCaseConstant.GET_RESULT_SERVICE_URL+testCaseSessionId, TestCaseExecutionResponse.class);
-			testCaseRunResponse.setStatus(testCaseExecutionResponse.getFinalStatus());
+		if(null != runningTestCaseList){
+			for(RunningTestCase runningTestCase : runningTestCaseList) {
+				TestCaseRunResponse testCaseRunResponse = runningTestCase.getTestCaseRunResponse();
+				String testCaseSessionId = testCaseRunResponse.getTestCaseSessionKey();
+				if(!TestCaseConstant.SUCCESS.equalsIgnoreCase(testCaseRunResponse.getStatus())) {
+				TestCaseExecutionResponse testCaseExecutionResponse = restTemplate.getForObject(TestCaseConstant.GET_RESULT_SERVICE_URL+testCaseSessionId, TestCaseExecutionResponse.class);
+				testCaseRunResponse.setStatus(testCaseExecutionResponse.getFinalStatus());
+				}
+				runningTestCase.setTestCaseRunResponse(testCaseRunResponse);
 			}
-			runningTestCase.setTestCaseRunResponse(testCaseRunResponse);
+			
 		}
 		
 		return runningTestCaseList;

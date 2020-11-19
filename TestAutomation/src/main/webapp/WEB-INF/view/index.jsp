@@ -1,4 +1,3 @@
-<%@page import="com.cts.testAutomation.model.TestCaseRunRequest"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib  uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -18,7 +17,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="container">
-<div class="row">
+	<div class="row">
     <div class="col-sm-12">
       <h2>Run Test Case</h2>
     </div>
@@ -28,33 +27,54 @@
   </div>
 <div class="form-content"> 
 <div class="row"> 
-
+	<form:form action="/result" modelAttribute="testCaseRunRequest" method="post"> 
     <div class="col-sm-12">
-								<form:form action="/result" modelAttribute="testCaseRunRequest" method="post"> 
+		<div class="col-sm-6">
+		<div class="form-group">
+		  <label for="selectedApp">Application:</label>
+		  <form:select class="form-control" id="selectedApp" path="selectedApp">
+			   <option value="">Select Application Name</option>
+				<c:forEach var="appValue" items="${appDetails}">
+				<option value="${appValue.appId}___${appValue.appName}"><c:out value="${appValue.appName}"/></option>
+				</c:forEach>
+			  </form:select>
+			</div>
+		</div>
+    </div>
+    <div class="col-sm-12">
+		<div class="col-sm-6">
+			<div class="form-group">
+			  <label for="">Functionality:</label>
+			  <form:select class="form-control" id="selectedPage" path="selectedPage">
+				
+			  </form:select>
+			</div>
+		</div>
+    </div>
+    <div class="col-sm-12">
+     	<div class="col-sm-6">
+			<div class="form-group">					
+			<label for="selectedTestCaseName">Available Configured TestCases:</label>
+			   <form:select class="form-control" id="selectedTestCaseName" path="selectedTestCaseName">
+				
+			  </form:select>
+			 </div>
+		</div>
+    </div>
+    <div class="col-sm-12">
+    	<button type="Submit" class="btnSubmit" >Run</button>
+    </div>
+</form:form>
 								<!-- section-1-->
-									<div class="col-sm-6">
-										<div class="form-group">
-										  <label for="selectedApp">Application:</label>
-										  <form:select class="form-control" id="selectedApp" path="selectedApp">
-										   <option value="">Select Application Name</option>
-											<c:forEach var="appValue" items="${appDetails}">
-											<option value="${appValue.appId}_#_${appValue.appName}"><c:out value="${appValue.appName}"/></option>
-											</c:forEach>
-										  </form:select>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-										  <label for="">Functionlity:</label>
-										  <form:select class="form-control" id="selectedPage" path="selectedPage">
-											
-										  </form:select>
-										</div>
-									</div>
-									</div>	 
+									
+								
+							
+								
+									
+								
 									<!-- section-1-->
 									<!-- section-2-->
-									<div class="col-sm-12">
+									<%-- <div class="col-sm-12">
 									
 										<div class="col-sm-6">
 										<label>Site 1:</label>
@@ -105,11 +125,11 @@
 											</div>
 										</div>
 										</div>
-									</div>
+									</div> --%>
 									<!-- section-2-->
 									<!-- section-3-->
 								<div class="col-sm-6">
-                                 <div class="form-group" id="login1">
+                                <%-- <div class="form-group" id="login1">
                                         <label class="label-name" for="userId">Login Credentials:</label>
                                         <form:checkbox path="loginCredRequired" id="loginCredRequired" />
                                         <div id="loginCred" style="display: none">
@@ -118,11 +138,13 @@
                                             <form:input type="Password" class="form-control" id="password" placeholder="Password" path="password" />
                                         </div>
                                    
-                                </div>
-								<button type="Submit" class="btnSubmit">Run</button>
+                                </div> --%>
+								
 								</div>
 								<!-- section--->
-							</form:form>
+							
+               
+         
 		 
 
 
@@ -136,5 +158,4 @@
                 $("#index").addClass('active'); 
         }); 
     </script>
-
 </html>

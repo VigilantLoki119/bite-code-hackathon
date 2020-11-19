@@ -1,10 +1,15 @@
 package com.cts.testAutomation.model;
 
+import java.util.Map;
+
+import com.cts.testAutomation.entity.TestCaseXpath;
+
 public class TestCaseExecutorRequest {
 	private String testCaseSessionKey;
 	private String siteName;
 	private String testCaseName;
 	private String url;
+	private Map<String, TestCaseXpath> xpathMap;
 	public String getTestCaseSessionKey() {
 		return testCaseSessionKey;
 	}
@@ -28,6 +33,12 @@ public class TestCaseExecutorRequest {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public Map<String, TestCaseXpath> getXpathMap() {
+		return xpathMap;
+	}
+	public void setXpathMap(Map<String, TestCaseXpath> xpathMap) {
+		this.xpathMap = xpathMap;
 	}
 	
 	

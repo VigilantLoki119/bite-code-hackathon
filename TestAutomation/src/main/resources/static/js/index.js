@@ -2,16 +2,16 @@
 $(document).ready(function() {
 	  $( "#selectedApp" ).change(function() {
 		$("#selectedPage").html("");
-	 	var appId = $("#selectedApp").val();
+	 	var appkey = $("#selectedApp").val();
 	     $.ajax({
 	         type : 'GET', 
-	         url  : 'http://localhost:2024/app/conf/page/details/'+appId, 
+	         url  : 'http://localhost:2024/app/conf/page/details/'+appkey, 
 	         success: function(response) {
 	         	if(undefined != response ){
 					var i=0;
 					var str= "<option value=''>Select Functionality Name</option>";
 					for(i; i<response.appPages.length; i++){
-						str=str+"<option value='"+response.appPages[i].pageId+"_#_"+response.appPages[i].pageName+"'>"+response.appPages[i].pageName+"</option>";
+						str=str+"<option value='"+response.appPages[i].pageId+"___"+response.appPages[i].pageName+"'>"+response.appPages[i].pageName+"</option>";
 					}
 	         		$("#selectedPage").html(str);
 	         	}
@@ -23,22 +23,22 @@ $(document).ready(function() {
 		});
 	  
 	  $( "#selectedPage" ).change(function() {
-		  $("#selectedTestCaseSite1").html("");
-   		  $("#selectedTestCaseSite2").html("");
-		 	var appId = $("#selectedApp").val();
-		 	var pageId = $("#selectedPage").val();
+		  $("#selectedTestCaseName").html("");
+   		
+		 	var appkey = $("#selectedApp").val();
+		 	var pagekey = $("#selectedPage").val();
 		     $.ajax({
 		         type : 'GET', 
-		         url  : 'http://localhost:2024/app/conf/testcase/'+appId+'/'+pageId, 
+		         url  : 'http://localhost:2024/app/conf/testcase/'+appkey+'/'+pagekey, 
 		         success: function(response) {
 		         	if(undefined != response ){
 						var i=0;
 						var str= "";
 						for(i; i<response.testCases.length; i++){
-							str=str+"<option value='"+response.testCases[i].testCaseId+"'>"+response.testCases[i].testCaseName+"</option>";
+							str=str+"<option value='"+response.testCases[i].testCaseId+"___"+response.testCases[i].testCaseName+"'>"+response.testCases[i].testCaseName+"</option>";
 						}
-		         		$("#selectedTestCaseSite1").html(str);
-		         		$("#selectedTestCaseSite2").html(str);
+		         		$("#selectedTestCaseName").html(str);
+		         		
 		         	}
 		         },
 		         error: function(response) {

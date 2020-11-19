@@ -39,7 +39,7 @@
 				  <select class="form-control" id="selectedApp">
 				   	<option value="">Select Application Name</option>
 						<c:forEach var="appValue" items="${appDetails}">
-							<option value="${appValue.appId}"><c:out value="${appValue.appName}"/></option>
+							<option value="${appValue.appId}___${appValue.appName}"><c:out value="${appValue.appName}"/></option>
 						</c:forEach>
 	  			</select>
 				</div>
@@ -102,7 +102,7 @@
         <h4 class="panel-title">
           <a class="collapse-record" data-toggle="collapse" data-parent="#accordion"  onclick="collapseTestStep(0)">
           <span>Step1</span> <b>:</b> 
-          <input class="teststepName" type="text" placeholder="Provide TestCase Step Name" name="name_teststep0" id="name_teststep0" value=''/>
+          <input class="teststepName" type="text" placeholder="Provide TestCase Step Name" name="name_teststep0" id="name_teststep0" value=""/>
           <span class="spanName_teststep" id="spanName_teststep0" style="display:none;"></span>
           </a>
           &nbsp;&nbsp;
@@ -137,7 +137,7 @@
 				  <tbody class="body">
 				  <tr>
 				  	  <td> Site1</td>
-				      <td><input type="text" class="xpathSite1" placeholder="Xpath for old site1" name="xpathSite1_teststep0" id="xpathSite1_teststep0" /></td>
+				      <td><input type="text" class="xpathSite1" placeholder="Xpath for old site1" name="xpathSite1_teststep0" id="xpathSite1_teststep0" value=""/></td>
 				      <td>  <select class="operationSite1" name="operationSite1_teststep0" id="operationSite1_teststep0">
 										   <option value="">Select Operation for site1</option>
 										   <c:forEach var="operationValue" items="${operationCatagory}">
@@ -145,12 +145,12 @@
 											</c:forEach>
 										  </select>
 					 </td>
-				      <td><input class="testDataSite1" type="text" placeholder="text data for site1" name="testDataSite1_teststep0"  id="testDataSite1_teststep0"/></td>
+				      <td><input class="testDataSite1" type="text" placeholder="text data for site1" name="testDataSite1_teststep0"  id="testDataSite1_teststep0" value=""/></td>
 				      
 				     </tr>
 				    <tr>
 				  	  <td> Site2</td>
-				      <td><input type="text" class="xpathSite2" placeholder="Xpath for old site2" name="xpathSite2_teststep0" id="xpathSite2_teststep0" /></td>
+				      <td><input type="text" class="xpathSite2" placeholder="Xpath for old site2" name="xpathSite2_teststep0" id="xpathSite2_teststep0"  value=""/></td>
 				      <td>  <select class="operationSite2" name="operationSite2_teststep0" id="operationSite2_teststep0">
 										   <option value="">Select Operation for site2</option>
 										   <c:forEach var="operationValue" items="${operationCatagory}">
@@ -158,7 +158,7 @@
 											</c:forEach>
 										  </select>
 					 </td>
-				      <td><input class="testDataSite2" type="text" placeholder="text data for site2" name="testDataSite2_teststep0"  id="testDataSite2_teststep0"/></td>
+				      <td><input class="testDataSite2" type="text" placeholder="text data for site2" name="testDataSite2_teststep0"  id="testDataSite2_teststep0" value=""/></td>
 				      
 				     </tr>
 				 
@@ -186,7 +186,7 @@
         <h4 class="panel-title">
            <a class="collapse-record" data-toggle="collapse" data-parent="#accordion" >
           <span>Step</span> <b>:</b> 
-          <input class="teststepName" type="text" placeholder="Provide TestCase Step Name" value=''/>
+          <input class="teststepName" type="text" placeholder="Provide TestCase Step Name" value=""/>
           <span class="spanName_teststep" style="display:none;"></span>
           </a>
           &nbsp;&nbsp;
@@ -221,28 +221,28 @@
 				  <tbody class="tbody-record">
 				  <tr>
 				  	  <td> Site1</td>
-				      <td><input type="text" class="xpathSite1" placeholder="Xpath for old site1"  /></td>
-				      <td>  <select class="operationSite1" >
+				      <td><input type="text" class="xpathSite1" placeholder="Xpath for old site1"  value=""/></td>
+				      <td>  <select class="operationSite1">
 										   <option value="">Select Operation for site1</option>
 										   <c:forEach var="operationValue" items="${operationCatagory}">
 												<option value="${operationValue}"><c:out value="${operationValue}"/></option>
 											</c:forEach>
 										  </select>
 						</td>
-				      <td><input class="testDataSite1" type="text" placeholder="text data for site1" /></td>
+				      <td><input class="testDataSite1" type="text" placeholder="text data for site1" value=""/></td>
 				      
 				     </tr>
 				    <tr>
 				  	  <td> Site2</td>
-				      <td><input type="text" class="xpathSite2" placeholder="Xpath for old site2"  /></td>
-				      <td>  <select class="operationSite2" >
+				      <td><input type="text" class="xpathSite2" placeholder="Xpath for old site2" value="" /></td>
+				      <td>  <select class="operationSite2">
 										   <option value="">Select Operation for site2</option>
 										   <c:forEach var="operationValue" items="${operationCatagory}">
 												<option value="${operationValue}"><c:out value="${operationValue}"/></option>
 											</c:forEach>
 										  </select>
 						</td>
-				      <td><input class="testDataSite2" type="text" placeholder="text data for site2" /></td>
+				      <td><input class="testDataSite2" type="text" placeholder="text data for site2" value=""/></td>
 				      
 				     </tr>
 				 

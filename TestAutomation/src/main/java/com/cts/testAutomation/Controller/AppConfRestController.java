@@ -44,10 +44,10 @@ public class AppConfRestController {
 	
 	
 	
-	@GetMapping("/page/details/{appKey}")
-	public PageDetailsResponse getPageDetails(@PathVariable String appKey) {
-		String[] appKeyArr = appKey.split(TestCaseConstant.APP_KEY_SPLITTER);
-		int appId = Integer.parseInt(appKeyArr[0]);
+	@GetMapping("/page/details/{appkey}")
+	public PageDetailsResponse getPageDetails(@PathVariable String appkey) {
+		String[] appkeyArr = appkey.split(TestCaseConstant.SPILLTER);
+		int appId = Integer.parseInt(appkeyArr[0]);
 		ApplicationDetails appDetails = appConfigRepository.findByAppId(appId);
 		
 		PageDetailsResponse response = new PageDetailsResponse();
@@ -60,6 +60,7 @@ public class AppConfRestController {
 			appPages.add(appPage);
 		}
 		response.setAppId(appId);
+		response.setAppName(appkeyArr[1]);
 		response.setAppPages(appPages);
 		}
 		return response;
@@ -76,12 +77,14 @@ public class AppConfRestController {
 		
 	}
 	
-	@GetMapping("/testcase/{appKey}/{pageKey}")
-	public TestCasesResponse getAvailabeTestCases(@PathVariable String appKey,@PathVariable String pageKey) {
-		String[] appKeyArr = appKey.split(TestCaseConstant.APP_KEY_SPLITTER);
-		String[] pageKeyArr = pageKey.split(TestCaseConstant.APP_KEY_SPLITTER);
-		int appId = Integer.parseInt(appKeyArr[0]);
-		int pageId = Integer.parseInt(pageKeyArr[0]);
+	@GetMapping("/testcase/{appkey}/{pagekey}")
+	public TestCasesResponse getAvailabeTestCases(@PathVariable String appkey,@PathVariable String pagekey) {
+		String[] appkeyArr = appkey.split(TestCaseConstant.SPILLTER);
+		int appId = Integer.parseInt(appkeyArr[0]);
+		
+		String[] pagekeyArr = pagekey.split(TestCaseConstant.SPILLTER);
+		int pageId = Integer.parseInt(pagekeyArr[0]);
+		
 		List<TestCase> testCasesList = testCasesRepository.findByAppIdAndPageId(appId, pageId);
 		TestCasesResponse response = new TestCasesResponse();
 		if(null != testCasesList) {
@@ -94,7 +97,9 @@ public class AppConfRestController {
 			}
 			response.setTestCases(list);
 			response.setAppId(appId);
+			response.setAppName(appkeyArr[1]);
 			response.setPageId(pageId);
+			response.setPageName(pagekeyArr[1]);
 		}
 		
 		return response;
@@ -108,6 +113,15 @@ public class AppConfRestController {
 		
 		if(null != request) {
 			testCase = new TestCase();
+			
+			String[] appKeyArr = request.getAppName().split(TestCaseConstant.SPILLTER);
+			request.setAppId(Integer.parseInt(appKeyArr[0]));
+			request.setAppName(appKeyArr[1]);
+			
+			String[] pageKeyArr = request.getPageName().split(TestCaseConstant.SPILLTER);
+			request.setPageId(Integer.parseInt(pageKeyArr[0]));
+			request.setPageName(pageKeyArr[1]);
+			
 			testCase.setAppId(request.getAppId());
 			testCase.setPageId(request.getPageId());
 			testCase.setTestCaseName(request.getTestCaseName());

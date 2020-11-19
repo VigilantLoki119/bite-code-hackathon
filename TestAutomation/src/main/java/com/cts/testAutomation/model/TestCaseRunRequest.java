@@ -1,8 +1,9 @@
 package com.cts.testAutomation.model;
 
 public class TestCaseRunRequest {
-	
+	private int selectedAppId;
 	private String selectedApp;
+	private int selectedPageId;
 	private String selectedPage;
 	private String selectedEnvSite1;
 	private String selectedUrlSite1;
@@ -11,8 +12,9 @@ public class TestCaseRunRequest {
 	private boolean loginCredRequired;
 	private String username;
 	private String password;
-	private String selectedTestCaseSite1;
-	private String selectedTestCaseSite2;
+	private String selectedTestCaseName;
+	private int selectedTestCaseId;
+	private String testExecutionDate;
 	public String getSelectedApp() {
 		return selectedApp;
 	}
@@ -25,7 +27,6 @@ public class TestCaseRunRequest {
 	public void setSelectedPage(String selectedPage) {
 		this.selectedPage = selectedPage;
 	}
-	
 	public String getSelectedEnvSite1() {
 		return selectedEnvSite1;
 	}
@@ -68,19 +69,36 @@ public class TestCaseRunRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getselectedTestCaseSite1() {
-		return selectedTestCaseSite1;
+	public String getSelectedTestCaseName() {
+		return selectedTestCaseName;
 	}
-	public void setselectedTestCaseSite1(String selectedTestCaseSite1) {
-		this.selectedTestCaseSite1 = selectedTestCaseSite1;
+	public void setSelectedTestCaseName(String selectedTestCaseName) {
+		this.selectedTestCaseName = selectedTestCaseName;
 	}
-	public String getSelectedTestCaseSite2() {
-		return selectedTestCaseSite2;
+	public int getSelectedTestCaseId() {
+		return selectedTestCaseId;
 	}
-	public void setSelectedTestCaseSite2(String selectedTestCaseSite2) {
-		this.selectedTestCaseSite2 = selectedTestCaseSite2;
+	public void setSelectedTestCaseId(int selectedTestCaseId) {
+		this.selectedTestCaseId = selectedTestCaseId;
+	}
+	public int getSelectedAppId() {
+		return selectedAppId;
+	}
+	public void setSelectedAppId(int selectedAppId) {
+		this.selectedAppId = selectedAppId;
+	}
+	public int getSelectedPageId() {
+		return selectedPageId;
+	}
+	public void setSelectedPageId(int selectedPageId) {
+		this.selectedPageId = selectedPageId;
+	}
+	public String getTestExecutionDate() {
+		return testExecutionDate;
+	}
+	public void setTestExecutionDate(String testExecutionDate) {
+		this.testExecutionDate = testExecutionDate;
 	}
 	
 	
-
 }

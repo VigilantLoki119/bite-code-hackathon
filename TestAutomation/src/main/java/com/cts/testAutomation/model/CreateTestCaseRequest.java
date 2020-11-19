@@ -11,7 +11,9 @@ public class CreateTestCaseRequest implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String testCaseName;
 	private int appId;
+	private String appName;
 	private int pageId;
+	private String pageName;
 	private int envIdSite1;
 	private int envIdSite2;
 	private List<TestCaseStep> testCaseSteps;
@@ -50,6 +52,18 @@ public class CreateTestCaseRequest implements Serializable{
 	}
 	public void setTestCaseSteps(List<TestCaseStep> testCaseSteps) {
 		this.testCaseSteps = testCaseSteps;
+	}
+	public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+	public String getPageName() {
+		return pageName;
+	}
+	public void setPageName(String pageName) {
+		this.pageName = pageName;
 	}
 	
 	

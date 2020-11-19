@@ -18,8 +18,8 @@ $(document).ready(function(){
     	});
     	console.log(itemList);
     	request.testCaseName =  $('#testCaseName').val(); 
-    	request.appId = $('#selectedApp').val();
-    	request.pageId = $('#selectedPage').val();
+    	request.appName = $('#selectedApp').val();
+    	request.pageName = $('#selectedPage').val();
     	request.envIdSite1 = $('#selectedEnvSite1').val();
     	request.envIdSite2 = $('#selectedEnvSite2').val();
     	request.testCaseSteps = itemList;
@@ -58,15 +58,17 @@ function collapseTestStep(id){
 function addTestStep(id){
 	var mainId = id;
 	//var size = $('#accordion >.main-record').length;
-	 var content = "";
+	var content = "";
 	 $('#accordion .main-record').each(function(index){
 	    if(index<mainId){
+	    	 changeAttribute($(this),index);
 			 content = content + '<div class="main-record" id="record'+index+'">' + $(this).html() + '</div>';
 		 }else if(index>mainId){
 			 id=id+1;
 			 changeAttribute($(this),id);
 			 content = content + '<div class="main-record" id="record'+id+'">' + $(this).html() + '</div>';
 		 }else{
+			 changeAttribute($(this),index);
 			 content = content + '<div class="main-record" id="record'+index+'">' + $(this).html() + '</div>';
 			 id=id+1;
 			 content = content + '<div class="main-record" id="record'+id+'">' + $('#templateRecord').html() +'</div>';
@@ -99,27 +101,51 @@ function deleteTestStep(id){
 }
 
 function changeAttribute(element,id){
+	var value='';
+	
 	element.find('.collapse-record').attr('onclick','collapseTestStep('+id+')');
 	element.find('.collapse-record span').html('Step'+(id+1));
-	element.find('.collapse-record span').html('Step'+(id+1));
-	element.find('.collapse-record .teststepName').attr('name','name_teststep'+id);
-	element.find('.collapse-record .teststepName').attr('id','name_teststep'+id);
-	element.find('.collapse-record .spanName_teststep').attr('id','spanName_teststep'+id);
+	
+	value = element.find('.teststepName').val();
+	element.find('.teststepName').attr('value',value);
+	element.find('.teststepName').attr('name','name_teststep'+id);
+	element.find('.teststepName').attr('id','name_teststep'+id);
+	element.find('.spanName_teststep').attr('id','spanName_teststep'+id);
+	element.find('.spanName_teststep').html(value);
+	
 	element.find('.glyphicon-ok').attr('onclick','saveTestStepName('+id+')');
 	element.find('.glyphicon-pencil').attr('onclick','editTestStepName('+id+')');
 	element.find('.delete-record').attr('onclick','deleteTestStep('+id+')');
 	element.find('.add-record').attr('onclick','addTestStep('+id+')');
 	element.find('.collapse-teststep').attr('id','clspTestStep'+id);
+	
+	value = element.find('.xpathSite1').val();
+	element.find('.xpathSite1').attr('value',value);
 	element.find('.xpathSite1').attr('name','xpathSite1_teststep'+id);
 	element.find('.xpathSite1').attr('id','xpathSite1_teststep'+id);
+	
+	value = element.find('.operationSite1').val();
+	element.find('.operationSite1 option[value='+value+']').attr("selected",true);
 	element.find('.operationSite1').attr('name','operationSite1_teststep'+id);
 	element.find('.operationSite1').attr('id','operationSite1_teststep'+id);
+	
+	value = element.find('.testDataSite1').val();
+	element.find('.testDataSite1').attr('value',value);
 	element.find('.testDataSite1').attr('name','testDataSite1_teststep'+id);
 	element.find('.testDataSite1').attr('id','testDataSite1_teststep'+id);
+	
+	value = element.find('.xpathSite2').val();
+	element.find('.xpathSite2').attr('value',value);
 	element.find('.xpathSite2').attr('name','xpathSite2_teststep'+id);
 	element.find('.xpathSite2').attr('id','xpathSite2_teststep'+id);
+	
+	value = element.find('.operationSite2').val();
+	element.find('.operationSite2 option[value='+value+']').attr("selected",true);
 	element.find('.operationSite2').attr('name','operationSite2_teststep'+id);
 	element.find('.operationSite2').attr('id','operationSite2_teststep'+id);
+	
+	value = element.find('.testDataSite2').val();
+	element.find('.testDataSite2').attr('value',value);
 	element.find('.testDataSite2').attr('name','testDataSite2_teststep'+id);
 	element.find('.testDataSite2').attr('id','testDataSite2_teststep'+id);
 	

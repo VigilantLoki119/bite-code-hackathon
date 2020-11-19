@@ -10,7 +10,9 @@ public class TestCasesResponse implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int appId;
+	private String appName;
 	private int pageId;
+	private String pageName;
 	private List<TestCaseDetails> testCases;
 	public int getAppId() {
 		return appId;
@@ -29,6 +31,18 @@ public class TestCasesResponse implements Serializable{
 	}
 	public void setTestCases(List<TestCaseDetails> testCases) {
 		this.testCases = testCases;
+	}
+	public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+	public String getPageName() {
+		return pageName;
+	}
+	public void setPageName(String pageName) {
+		this.pageName = pageName;
 	}
 	
 	
